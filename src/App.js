@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
+import CheckoutPage from "./pages/checkout/checkout.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import { auth } from "./firebase/firebase.utils";
@@ -10,6 +11,8 @@ import { createUserProfileDocument } from "./firebase/firebase.utils";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/user.actions";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -29,7 +32,7 @@ class App extends React.Component {
           });
         });
       } else {
-        setCurrentUser(userAuth );
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -44,7 +47,18 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route exact path="/signin" render= {()=> this.props.currentUser? <Redirect to="/" /> : <SignInAndSignUpPage /> } />
+          <Route exact path="/checkout" component={CheckoutPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
         </Switch>
       </div>
     );
@@ -55,7 +69,7 @@ const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
 
-const mapStateToProps = ({user}) => ({
-user: user.currentUser
-})
+const mapStateToProps = createStructuredSelector({
+  user: selectCurrentUser
+});
 export default connect(mapStateToProps, mapDispatchToProps)(App);
