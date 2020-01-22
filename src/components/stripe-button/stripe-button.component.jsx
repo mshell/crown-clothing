@@ -1,5 +1,5 @@
-import React from "react";
-import StripeCheckout from "react-stripe-checkout";
+import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 
 const StripeCheckoutButton = ({ price }) => {
   const priceForStripe = price * 100;
@@ -7,22 +7,23 @@ const StripeCheckoutButton = ({ price }) => {
 
   const onToken = token => {
     console.log(token);
-    alert("Payment Successful");
+    alert('Payment Succesful!');
   };
+
   return (
     <StripeCheckout
-      label="Pay Now"
-      name="CRWN Clothing ltd."
+      label='Pay Now'
+      name='CRWN Clothing Ltd.'
       billingAddress
       shippingAddress
-      image="https://sendeyo.com/up/d/f3eb2117da"
+      image='https://svgshare.com/i/CUz.svg'
       description={`Your total is $${price}`}
       amount={priceForStripe}
-      panelLabel="Pay Now"
+      panelLabel='Pay Now'
       token={onToken}
-      stripeKey = {publishableKey}
+      stripeKey={publishableKey}
     />
   );
 };
 
-export default StripeCheckoutButton
+export default StripeCheckoutButton;
