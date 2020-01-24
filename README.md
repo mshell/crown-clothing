@@ -1,6 +1,7 @@
-## Lesson-25
+## Lesson-26-complete
 
-We have removed the redux-logger middleware from our production build!
+In this repository, all our components have been converted to styled-components!
+
 
 # How to fork and clone
 
